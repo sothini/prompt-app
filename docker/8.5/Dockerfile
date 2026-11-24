@@ -85,6 +85,13 @@ fi
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.5
 
+RUN curl -fsSL https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor -o /usr/share/keyrings/trivy.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" > /etc/apt/sources.list.d/trivy.list \
+    && apt-get update \
+    && apt-get install -y trivy \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN userdel -r ubuntu
 RUN groupadd --force -g $WWWGROUP sail
 RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 sail

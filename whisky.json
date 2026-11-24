@@ -1,0 +1,11 @@
+{
+  "disabled": [],
+  "hooks": {
+    "pre-commit": [
+      "./vendor/bin/sail composer pre-commit"
+    ],
+    "pre-push": [
+      "./vendor/bin/sail composer pre-push"
+    ]
+  }
+}
